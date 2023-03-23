@@ -1,7 +1,9 @@
+import { Injectable } from "@nestjs/common";
 import { PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Entity } from "typeorm";
 
-@Entity('user')
+@Entity()
 export class User {
+
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -9,7 +11,7 @@ export class User {
     username: string;
 
     @Column()
-    mobile: string;
+    phone: string;
 
     @Column()
     password: string;
@@ -17,12 +19,11 @@ export class User {
     @Column({nullable: true})
     profile_url: string
 
-
     @Column()
     gender: string
 
     @Column()
-    locaton: string
+    address: string
 
     @Column()
     district: string
@@ -30,11 +31,20 @@ export class User {
     @CreateDateColumn()
     created_at: Date;
 
-    @Column({
-        default: 0
-        })
-    reward_points: Number
+    @CreateDateColumn()
+    updated_at: Date;
+
+    @Column({default: 0})
+    reward_points: number
+
+    @Column({default: 'user'})
+    role: string
+
+    @Column()
+    invite_code: string
 
     // @UpdateDateColumn()
     // updated_at: Date;
 }
+
+

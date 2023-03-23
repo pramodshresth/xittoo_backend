@@ -1,3 +1,4 @@
+import { User } from "src/user/entity/user.entity";
 import { DataSource } from "typeorm";
 
 export const AppDataSource = new DataSource({
@@ -7,6 +8,9 @@ export const AppDataSource = new DataSource({
     username: 'postgres',
     password: 'pramod',
     database: 'xittoo',
-    entities: ['dist/**/*.entity{.ts,.js}'],
+    entities: [User],
     synchronize: true,  
+    migrationsRun: true,
+    migrations: ['dist/migrations/*.js'],
+    migrationsTableName: 'migrations_history',
 });
