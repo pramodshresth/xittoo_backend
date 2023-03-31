@@ -4,7 +4,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { AppDataSource } from './config/database';
+import { ProblemModule } from './problem/problem.module';
 import { UserModule } from './user/user.module';
+import { VendorModule } from './vendor/vendor.module';
 import { XittooServiceModule } from './xittoo_services/xittoo_services.module';
 
 @Module({
@@ -13,6 +15,8 @@ import { XittooServiceModule } from './xittoo_services/xittoo_services.module';
     UserModule,
     AuthModule,
     XittooServiceModule,
+    ProblemModule,
+    VendorModule
   ],
   controllers: [AppController],
   providers: [AppService],

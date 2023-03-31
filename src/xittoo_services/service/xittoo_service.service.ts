@@ -45,18 +45,22 @@ export class XittooServices1{
 
 
     async deleteService(id: string){
-        const service = await this.xittoService
-        .createQueryBuilder('xittoo-services')
-        .where('id= :service_id', {
-            service_id: id,
-        }).getOne();
-
-        const filePath = `./upload/xittoo-service/${service.icon_id}` // assuming images are stored in the uploads directory
         try {
+            const service = await this.xittoService
+            .createQueryBuilder('xittoo-services')
+            .where('id= :service_id', {
+                service_id: id,
+            }).getOne();
+          const filePath = `./upload/xittoo-service/${service.icon_id}` // assuming images are stored in the uploads directory
           fs.unlinkSync(filePath);// delete the file from the file system
-          return { message: 'File deleted successfully!' };
+          await this.xittoService.delete(id);
+          return { 
+            message: 'File deleted successfully!',
+            status: true,
+            statusCode: HttpStatus.OK
+         };
         } catch (error) {
-          throw new HttpException('Could not delete file', HttpStatus.INTERNAL_SERVER_ERROR);
+          throw new HttpException('Could not delete Service', HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

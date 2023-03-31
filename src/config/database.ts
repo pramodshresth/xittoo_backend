@@ -1,4 +1,6 @@
+import { Problem } from "src/problem/entity/problem.entity";
 import { User } from "src/user/entity/user.entity";
+import { Vendor } from "src/vendor/entity/vendor.entity";
 import { XittooServices } from "src/xittoo_services/entity/xittoo_services.entity";
 import { DataSource } from "typeorm";
 
@@ -9,7 +11,7 @@ export const AppDataSource = new DataSource({
     username: 'postgres',
     password: 'pramod',
     database: 'xittoo',
-    entities: [User, XittooServices],
+    entities: [User, XittooServices, Problem, Vendor],
     // entities: ['dist/entities/*.entity.{ts,js}', 'src/entities/*.entity.{ts,js}'],
     synchronize: true,  
     migrationsRun: true,

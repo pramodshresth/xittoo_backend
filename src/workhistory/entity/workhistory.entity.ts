@@ -1,25 +1,24 @@
 import { Injectable } from "@nestjs/common";
 import { Exclude } from "class-transformer";
-import { Vendor } from "src/vendor/entity/vendor.entity";
+import { User } from "src/user/entity/user.entity";
 import { PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Entity, ManyToOne, JoinColumn } from "typeorm";
 
 @Entity()
-export class XittooServices {
+export class WorkHistory {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
-    name: string;
+    @ManyToOne(() => User)
+    @JoinColumn({ name: "user_id" })
+    user: User;
 
-    @Column()
-    icon_url: string;
+    @Column({default:"pending"})
+    status: string;
+
+    
 
     @Column()
     icon_id: string
-
-    @ManyToOne(() => Vendor, vendor => vendor.xitto_service)
-    @JoinColumn({ name: 'vendor_id' })
-    vendors: Vendor;
 
     @CreateDateColumn()
     created_at: Date;

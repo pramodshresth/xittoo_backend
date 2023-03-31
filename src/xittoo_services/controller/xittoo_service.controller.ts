@@ -32,7 +32,8 @@ export class XittoServiceController {
     }
 
 
-    @Delete(':id')
+    @Delete('delete/:id')
+    @UseGuards(JwtAuthGuard, AdminGuard)
     deleteService(@Param('id') id: string) {
        return this.xittoService.deleteService(id);
           }

@@ -14,9 +14,6 @@ export class Problem {
     per_price: string;
 
     @Column()
-    username: string;
-
-    @Column()
     description: string;
 
     @Column()
@@ -25,11 +22,16 @@ export class Problem {
     @Column()
     image_id: string
 
+    @Column({})
+    facilate_charge: number
 
-    @ManyToOne(() => XittooServices, (service) => service.id, {})
-    @JoinColumn({name: "service_id"})
+    @ManyToOne(() => XittooServices)
+    @JoinColumn({ name: "service_id" })
     xitto_service: XittooServices;
 
+
+    @Column({ type: 'text', array: true })
+    brand: string[];
 
     @CreateDateColumn()
     created_at: Date;
