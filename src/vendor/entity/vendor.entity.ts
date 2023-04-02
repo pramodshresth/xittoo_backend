@@ -31,7 +31,7 @@ export class Vendor {
     @CreateDateColumn()
     created_at: Date;
 
-    @CreateDateColumn()
+    @UpdateDateColumn()
     updated_at: Date;
 }
 

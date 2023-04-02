@@ -8,6 +8,9 @@ import { ProblemModule } from './problem/problem.module';
 import { UserModule } from './user/user.module';
 import { VendorModule } from './vendor/vendor.module';
 import { XittooServiceModule } from './xittoo_services/xittoo_services.module';
+import { WorkHistoryModule } from './workhistory/workhistory.module';
+
+
 
 @Module({
   imports: [
@@ -16,7 +19,8 @@ import { XittooServiceModule } from './xittoo_services/xittoo_services.module';
     AuthModule,
     XittooServiceModule,
     ProblemModule,
-    VendorModule
+    VendorModule,
+    WorkHistoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

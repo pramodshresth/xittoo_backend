@@ -1,7 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { Exclude } from "class-transformer";
 import { User } from "src/user/entity/user.entity";
-import { PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Entity, ManyToOne, JoinColumn } from "typeorm";
+import { Vendor } from "src/vendor/entity/vendor.entity";
+import { PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Entity, ManyToOne, JoinColumn, OneToOne } from "typeorm";
 
 @Entity()
 export class WorkHistory {
@@ -9,22 +10,20 @@ export class WorkHistory {
     id: string;
 
     @ManyToOne(() => User)
-    @JoinColumn({ name: "user_id" })
+    @JoinColumn({ name: "req_by" })
     user: User;
+
+    @ManyToOne(() => Vendor,{nullable:true})
+    @JoinColumn({ name: "assign_to" })
+    vendor: Vendor;
 
     @Column({default:"pending"})
     status: string;
 
-    
-
-    @Column()
-    icon_id: string
-
     @CreateDateColumn()
     created_at: Date;
     
-
-    @CreateDateColumn()
+    @UpdateDateColumn()
     updated_at: Date;
     // @UpdateDateColumn()
     // updated_at: Date;

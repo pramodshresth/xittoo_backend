@@ -6,6 +6,8 @@ import { extname } from "path";
 import { XittoServiceController } from "./controller/xittoo_service.controller";
 import { XittooServices } from "./entity/xittoo_services.entity";
 import { XittooServices1 } from "./service/xittoo_service.service";
+import { AuthGuard } from "@nestjs/passport";
+import { User } from "src/user/entity/user.entity";
 
 @Module({
     imports: [
@@ -28,7 +30,7 @@ import { XittooServices1 } from "./service/xittoo_service.service";
               
             }),
           }),
-          TypeOrmModule.forFeature([XittooServices])
+          TypeOrmModule.forFeature([XittooServices,User])
     ],
     providers:  [XittooServices1],
     controllers : [XittoServiceController],
