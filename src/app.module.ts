@@ -9,6 +9,7 @@ import { UserModule } from './user/user.module';
 import { VendorModule } from './vendor/vendor.module';
 import { XittooServiceModule } from './xittoo_services/xittoo_services.module';
 import { WorkHistoryModule } from './workhistory/workhistory.module';
+import { NotificationModule } from './notification/notification.module';
 
 
 
@@ -21,6 +22,7 @@ import { WorkHistoryModule } from './workhistory/workhistory.module';
     ProblemModule,
     VendorModule,
     WorkHistoryModule,
+    NotificationModule
   ],
   controllers: [AppController],
   providers: [AppService],

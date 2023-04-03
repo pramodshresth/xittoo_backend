@@ -1,3 +1,4 @@
+import { otification } from "src/notification/entity/notification.entity";
 import { Problem } from "src/problem/entity/problem.entity";
 import { User } from "src/user/entity/user.entity";
 import { Vendor } from "src/vendor/entity/vendor.entity";
@@ -12,7 +13,7 @@ export const AppDataSource = new DataSource({
     username: 'postgres',
     password: 'pramod',
     database: 'xittoo',
-    entities: [User, XittooServices, Problem, Vendor, WorkHistory],
+    entities: [User, XittooServices, Problem, Vendor, WorkHistory, otification],
     // entities: ["dist/user/entity/user.entity.js"],
     // entities: ['src/*/*/*.entity.js'],
     synchronize: true,  
