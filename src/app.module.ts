@@ -10,6 +10,7 @@ import { VendorModule } from './vendor/vendor.module';
 import { XittooServiceModule } from './xittoo_services/xittoo_services.module';
 import { WorkHistoryModule } from './workhistory/workhistory.module';
 import { NotificationModule } from './notification/notification.module';
+import { OtpModule } from './otp/otp.module';
 
 
 
@@ -22,7 +23,8 @@ import { NotificationModule } from './notification/notification.module';
     ProblemModule,
     VendorModule,
     WorkHistoryModule,
-    NotificationModule
+    NotificationModule,
+    OtpModule,
   ],
   controllers: [AppController],
   providers: [AppService],
