@@ -1,17 +1,24 @@
 import { Controller, Get, Post } from "@nestjs/common";
 import { AppService } from "src/app.service";
-import { NotificationService } from "../service/notification.service";
+// import { NotificationService } from "../service/notification.service";
 import { Observable, of } from "rxjs";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { NotificationEntity } from "../entity/notification.entity";
+import { NotificationGateway } from "../gateway/notification.gateway";
 
 @Controller('notification')
 export class NotificationController{
-   
     constructor(
-        private readonly notServ : NotificationService
+      @InjectRepository(NotificationEntity) private readonly notiRepo: Repository<NotificationEntity>,
+      private readonly appGateway : NotificationGateway
     ){ }
     @Post()
-    sendNotification(){
-      this.notServ.createNotification("My Name is Pramod");
+    async sendNotification(){
+      const n_user = this.notiRepo.create({message: "Pramod"});
+      const data = await this.notiRepo.save(n_user);
+      this.appGateway.onNewMessage({id: data.id, msg: data.message});
+      
     }
 
     @Get()

@@ -1,18 +1,18 @@
 import { Entity, Column, PrimaryGeneratedColumn, AfterInsert } from 'typeorm';
-import { AppGateway } from '../gateway/notification.gateway';
+import { NotificationGateway } from '../gateway/notification.gateway';
 
 
 @Entity()
-export class otification {
+export class NotificationEntity {
   @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column()
   message: string;
 
-  @AfterInsert()
-  sendNotification(): void {
-    const appGateway = new AppGateway();
-    appGateway.emitNotification({ message: this.message });
-  }
+  // @AfterInsert()
+  // sendNotification(): void {
+    // const appGateway = new NotificationGateway();
+    // appGateway.onNewMessage({ message: this.message });
+  // }
 }
