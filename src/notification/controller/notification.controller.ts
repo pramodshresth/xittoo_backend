@@ -17,7 +17,7 @@ export class NotificationController{
     async sendNotification(){
       const n_user = this.notiRepo.create({message: "Pramod"});
       const data = await this.notiRepo.save(n_user);
-      this.appGateway.onNewMessage({id: data.id, msg: data.message});
+      this.appGateway.onNewMessage({id:"manila", msg: data.message});
       
     }
 

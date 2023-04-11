@@ -7,7 +7,9 @@ import { BcryptService } from "./bcrypt.service";
 
 export class AuthService {
     constructor(
-        @InjectRepository(User) private readonly userRepo: Repository<User>,
+        @InjectRepository(User)
+        private readonly userRepo: Repository<User>,
+
         private readonly bcryptService: BcryptService,
         private jwtService: JwtService,
     ) { }

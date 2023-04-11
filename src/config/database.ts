@@ -1,5 +1,6 @@
 // import { otification } from "src/notification/entity/notification.entity";
 import { NotificationEntity } from "src/notification/entity/notification.entity";
+import { Otp } from "src/otp/entity/otp.entity";
 import { Problem } from "src/problem/entity/problem.entity";
 import { User } from "src/user/entity/user.entity";
 import { Vendor } from "src/vendor/entity/vendor.entity";
@@ -14,9 +15,11 @@ export const AppDataSource = new DataSource({
     username: 'postgres',
     password: 'pramod',
     database: 'xittoo',
-    entities: [User, XittooServices, Problem, Vendor, WorkHistory, NotificationEntity],
+    // entities: [User, XittooServices, Problem, Vendor, WorkHistory, NotificationEntity, Otp],
     // entities: ["dist/user/entity/user.entity.js"],
-    // entities: ['src/*/*/*.entity.js'],
+    // entities: ['src/*/*/*.entity.ts'],
+    entities: ['dist/**/*.entity.js'],
+
     synchronize: true,  
     migrationsRun: true,
     migrations: ['dist/migrations/*.js'],

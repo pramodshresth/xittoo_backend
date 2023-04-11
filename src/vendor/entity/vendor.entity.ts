@@ -12,7 +12,9 @@ export class Vendor {
     @JoinColumn({name: "user_id"})
     user: User;
     
-    @OneToMany(() => XittooServices, xitto_service => xitto_service.vendors)
+    @OneToMany(() => XittooServices, xitto_service => xitto_service.vendors, {
+        onDelete: 'CASCADE',
+    })
     @JoinColumn({ name: "services" })
     xitto_service: XittooServices[];
 

@@ -4,6 +4,9 @@ import { BcryptService } from "src/auth/services/bcrypt.service";
 import { Repository } from "typeorm";
 import { RegisterDto } from "../dtos/register.dto";
 import { User } from "../entity/user.entity";
+import { ChangePasswordDto } from "../dtos/chnage_password.dto";
+import { log } from "console";
+import { ChangePwDto } from "../dtos/chnage_pw.dto";
 
 @Injectable()
 export class UserServices {
@@ -52,7 +55,7 @@ export class UserServices {
                     registerDto.password,
                 );
                 const n_user = this.userRepo.create({ ...registerDto, password: hashPassword });
-                if (registerDto.invite_code == null) {
+                if (registerDto.invite_code == null || registerDto.invite_code == "") {
                     const r_user = await this.userRepo.save({ ...n_user, invite_code: generateUniqueString() });
                     return {
                         message: 'User registered Successfully',
@@ -91,6 +94,116 @@ export class UserServices {
                 statusCode: HttpStatus.BAD_REQUEST,
             }
         }
+    }
+
+
+    async deleteUser(id: string) {
+        try {
+            await this.userRepo.delete({ id: id });
+            return {
+                status: true,
+                statusCode: HttpStatus.OK,
+                message: "User Deleted Sucessfully"
+            }
+        } catch (e) {
+            return {
+                status: false,
+                statusCode: HttpStatus.BAD_REQUEST,
+                message: e.message
+            }
+        }
+    }
+
+    async getAllUser() {
+        let data = await this.userRepo.find();
+        return {
+            data: data
+        }
+    }
+
+
+    async chnagePw(changePwDto: ChangePwDto, id: string){
+        console.log(changePwDto.currentPassword);
+        console.log(changePwDto.newPassword);
+        const user = await this.userRepo
+        .createQueryBuilder('user')
+        .where('id= :id', {
+            id: id,
+        }).getOne();
+        const isMatchPassword = await this.bcryptService.comparePassword(user.password, changePwDto.currentPassword);
+    
+        if(user){
+            const isMatchPassword = await this.bcryptService.comparePassword(user.password, changePwDto.currentPassword);
+           if(isMatchPassword){
+            const hashPassword = await this.bcryptService.hashPassword(
+                changePwDto.newPassword,
+            );
+            await this.userRepo.createQueryBuilder('user').update(User).set(
+                {
+                    password: hashPassword,
+                }
+            ).where("id = :id", { id: id }).execute();
+            return{
+                message: "Your password changed sucessfully",
+                status: true,
+                statusCode: HttpStatus.OK,
+            }
+           }else{
+            return{
+                status: false,
+                message: "Your Password does not matched with current password",
+                statusCode: HttpStatus.BAD_REQUEST
+            }
+           }
+        }else{
+            return{
+                message: "Something went wrong",
+                status: false,
+                statusCode: HttpStatus.BAD_REQUEST,
+            }
+        }
+                
+    }
+
+
+    async chnangeUserPasswordWithPhone(chnageDto: ChangePasswordDto) {
+      try {
+        console.log(chnageDto.phone);
+        
+        const getUser = await this.userRepo
+        .createQueryBuilder('user')
+        .where('phone= :phone', {
+            phone: chnageDto.phone,
+        }).getOne();
+
+    if (getUser) {
+        const hashPassword = await this.bcryptService.hashPassword(
+            chnageDto.password,
+        );
+        await this.userRepo.createQueryBuilder('user').update(User).set(
+            {
+                password: hashPassword,
+            }
+        ).where("phone = :phone", { phone: chnageDto.phone }).execute();
+        return {
+            status: true,
+            statusCode: HttpStatus.OK,
+            message: "Password Chnaged Sucessfully"
+        }
+    }else{
+        return{
+            status: false,
+            statusCode: HttpStatus.BAD_REQUEST,
+            message: "Please Enter the valid Number"
+        }
+    }
+      } catch (error) {
+        return{
+            status: false,
+            statusCode: HttpStatus.BAD_REQUEST,
+            message: "Something went wrong"
+        }
+      }
     }
 }
 

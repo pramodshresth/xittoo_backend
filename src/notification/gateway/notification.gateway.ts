@@ -1,28 +1,32 @@
 import { OnModuleInit } from '@nestjs/common';
-import { MessageBody, OnGatewayConnection, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
-import { Server, Socket } from 'socket.io';
+import { MessageBody, OnGatewayConnection, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import { Socket, Server } from 'socket.io';
+
 
 @WebSocketGateway()
-export class NotificationGateway implements OnModuleInit, OnGatewayConnection   {
+export class NotificationGateway implements OnModuleInit, OnGatewayConnection , OnGatewayInit {
+
+  clients = [];
+  afterInit(server: any) {
+    this.clients =server.clients;
+  }
 
   handleConnection(client: Socket, ...args: any[]) {
-    const userId = client.handshake.query.userId;
+    const userId = client.handshake.query.id;
     console.log(userId);
+    this.userIdToSocketMap.set(`${userId}`, client);
+    client.data['userId'] =userId;
+    // client.data.userId =  userId;
 
-    client.data.userId =  userId;
-
-    const matchingSockets = Array.from(this.server.sockets.sockets.values())
-        .filter(s => s.data.user && s.data.userId === userId);
-
-      matchingSockets.forEach(s => {
-        s.emit('event', { message: 'Hello, world!' });
-      });
+ 
     
   }
 
 
-  @WebSocketServer()
-  server: Server
+  @WebSocketServer() server: Server
+  userIdToSocketMap = new Map<string, Socket>();
+
+  
 
   onModuleInit() {
     this.server.on('connection', (socket)=>{
@@ -35,11 +39,22 @@ export class NotificationGateway implements OnModuleInit, OnGatewayConnection   
 
   @SubscribeMessage('newMessage')
   onNewMessage(@MessageBody() body: any){
-    console.log(body);
-    this.server.emit('onMessage', {
-      msg: "New Message",
-      a: body.msg
-    });  
+    console.log(this.server.socketsJoin.name);
+    const targetClient = this.server['userId'];
+
+    const client = this.userIdToSocketMap.get("manila");
+    // this.server.emit('onMessage', {
+    //   msg: "New Message",
+    //   a: body
+    // })
+    console.log(targetClient);
+    
+    if(client){
+      client.emit('onMessage', {
+        msg: "New Message",
+        a: body
+      });  
+    }
   }
 
 }

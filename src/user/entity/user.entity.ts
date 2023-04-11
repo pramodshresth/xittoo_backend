@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Exclude } from "class-transformer";
 import { PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Entity } from "typeorm";
 
-@Entity('user')
+@Entity()
 export class User {
 
     @PrimaryGeneratedColumn('uuid')
