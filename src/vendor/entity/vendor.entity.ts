@@ -11,12 +11,12 @@ export class Vendor {
     @OneToOne(() => User, { cascade: true, onDelete: 'CASCADE' })
     @JoinColumn({name: "user_id"})
     user: User;
-    
-    @OneToMany(() => XittooServices, xitto_service => xitto_service.vendors, {
-        onDelete: 'CASCADE',
-    })
-    @JoinColumn({ name: "services" })
-    xitto_service: XittooServices[];
+        
+    // @OneToMany(() => XittooServices, xitto_service => xitto_service.vendors, {
+    //     onDelete: 'CASCADE',
+    // })
+    // @JoinColumn({ name: "services" })
+    // xitto_service: XittooServices[];
 
     @Column()
     availability: string

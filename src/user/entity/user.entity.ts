@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { Exclude } from "class-transformer";
-import { PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Entity } from "typeorm";
+import { PrimaryGeneratedColumn, Column, CreateDateColumn, Entity } from "typeorm";
 
-@Entity()
+@Entity('users')
 export class User {
 
     @PrimaryGeneratedColumn('uuid')
@@ -30,12 +30,10 @@ export class User {
 
     @Column()
     district: string
- 
+
     @CreateDateColumn()
     created_at: Date;
 
-    @UpdateDateColumn()
-    updated_at: Date;
 
     @Column({default: 0})
     reward_points: number

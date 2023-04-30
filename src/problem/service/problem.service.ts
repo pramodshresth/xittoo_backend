@@ -59,9 +59,38 @@ export class ProblemService {
             return {
                 message: "Somthing went wrong",
                 status: false,
-                statusCode: HttpStatus.BAD_REQUEST
+                statusCode: HttpStatus.INTERNAL_SERVER_ERROR
             }  
         }
+    }
+
+
+    async deleteProblem(id: string){
+        try {
+            const result = await this.problemRepo.delete({
+              id: id,
+            });
+            if (result.affected) {
+                return {
+                    message: "Problem deleted sucessfully",
+                    status: true,
+                    statusCode: HttpStatus.CREATED,
+                } 
+            } else {
+              return {
+                status: false,
+                message: "Sorry, couldn't delete problem",
+                statusCode: HttpStatus.BAD_REQUEST,
+              };
+            }
+          } catch (e) {
+            return {
+                status: false,
+                message: "Sorry, couldn't delete problem",
+                statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+              };
+          }
+      
     }
 
 }

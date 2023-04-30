@@ -1,7 +1,7 @@
 import { XittooServices } from "src/xittoo_services/entity/xittoo_services.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-@Entity()
+@Entity('problems')
 export class Problem {
 
     @PrimaryGeneratedColumn('uuid')

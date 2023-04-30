@@ -3,7 +3,7 @@ import { Exclude } from "class-transformer";
 import { Vendor } from "src/vendor/entity/vendor.entity";
 import { PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Entity, ManyToOne, JoinColumn } from "typeorm";
 
-@Entity()
+@Entity('services')
 export class XittooServices {
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -17,9 +17,9 @@ export class XittooServices {
     @Column()
     icon_id: string
 
-    @ManyToOne(() => Vendor, vendor => vendor.xitto_service)
-    @JoinColumn({ name: 'vendor_id' })
-    vendors: Vendor;
+    // @ManyToOne(() => Vendor, vendor => vendor.xitto_service)
+    // @JoinColumn({ name: 'vendor_id' })
+    // vendors: Vendor;
 
     @CreateDateColumn()
     created_at: Date;

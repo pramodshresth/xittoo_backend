@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity('otp')
 export class Otp {
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -8,6 +8,7 @@ export class Otp {
     @Column()
     phone_number: string;
 
+    
     @Column()
     otp: string;
 

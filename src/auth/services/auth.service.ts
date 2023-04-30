@@ -31,12 +31,14 @@ export class AuthService {
             return {
                 message: "Please Enter the valid password",
                 status: false,
+                statusCode: HttpStatus.BAD_REQUEST
                }
          }
         }else{
             return {
                 status: false,
-                message: "User Not Found"
+                message: "User Not Found",
+                statusCode: HttpStatus.BAD_REQUEST,
             }
         }
         
